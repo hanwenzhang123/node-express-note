@@ -6,6 +6,9 @@ query string goes to the end of url starts with ?, seperate with additional valu
 
 req.query.side
 
+Now we can check questions and answers by using query strings
+
+
 //card.pug
 extends layout.pug
 
@@ -16,6 +19,7 @@ block content
       p
         i Hint: #{hint}
     a(href=`${id}?side=${sideToShow}`)= sideToShowDisplay
+
 
 //cards.js
 const express = require('express');
@@ -50,3 +54,39 @@ router.get('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+
+   
+//questions
+What way besides a route parameter can information be passed to the server?
+query string
+
+What does a query string contain?
+key value pairs
+
+What symbol in a URL marks the beginning of a query string?
+?
+
+Given the URL
+http://example.com/resource?building=42&age=40&color=salmon
+What is the value of "age" in the query string?
+40
+
+Pug templates support JavaScript string interpolation.
+
+Pug 
+h1 Hi #{animal}!
+h1=`Hi ${animal}!`
+HTML
+<h1>Hi, aardvark!</h1>
+<h1>Hi, aardvark!</h1>
+
+Pug 
+h1(title='Hi ' + animal + '!') text
+h1(title=`Hi ${animal}!`) text
+HTML
+<h1 title="Hi arrdvark!">text</h1>
+<h1 title="Hi arrdvark!">text</h1>
+
+
+  
