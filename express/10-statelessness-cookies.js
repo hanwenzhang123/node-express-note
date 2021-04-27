@@ -8,7 +8,12 @@ app.get('/hello', (req, res) => {
   res.render('hello', {name: req.cookies.username});
 });
 
-
+app.post('/hello', (req, res) => {
+  res.cookie('username', req.body.username);    //save the cookie
+  res.render('hello', {name: req.body.username);
+});
+  
+  
 //question
 What do cookies do?
   Cookie store data on the client
