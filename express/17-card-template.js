@@ -98,4 +98,17 @@ HTML
 <h1 title="Hi arrdvark!">text</h1>
 
 
-  
+Where are cookies stored?
+on the client
+
+What are two ways of putting data into a URL to be sent to the server?
+query strings and url parameters
+
+How do you get cookies from a client's request?
+req.cookies
+
+What happens when an object is passed into the `next` function?
+Execution is passed to the next error handling middleware function
+
+What is one of the benefits of template rendering?
+it reduces repetition you would otherwise need to have in your HTML files
