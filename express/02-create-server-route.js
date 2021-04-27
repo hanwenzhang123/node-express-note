@@ -18,6 +18,7 @@ app.listen(3000); //port/server 3000, // example of using variable/constant to a
 
 //install nodemon
 npm install -g nodemon //restart the server everytime when you change the code
+sudo npm install -g nodemon //It will prompt you for your system password to actually execute.
 
 
 //questions
