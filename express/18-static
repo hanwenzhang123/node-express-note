@@ -1,7 +1,0 @@
-express.static(root, [option])
-
-app.use(express.static('public'))   //the public folder where contains css files
-
-layout.pug
-link(rel='stylesheet', href='/static/stylesheets/style.css')
-
