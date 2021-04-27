@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
     const { hint } = cards[id];
 
     if (!side) {
-      res.redirect(`/cards/${id}?side=question`);
+      return res.redirect(`/cards/${id}?side=question`);    //stop the execution after the retun statement
     }
     const name = req.cookies.username;
     const text - cards[id][side];
