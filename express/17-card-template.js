@@ -19,6 +19,8 @@ block content
       p
         i Hint: #{hint}
     a(href=`${id}?side=${sideToShow}`)= sideToShowDisplay
+    br
+    a(href='/cards') Next Card  //move easily to the next card by clicking the link
 
 
 //cards.js
@@ -27,7 +29,7 @@ const router = express.Router();
 const { data } = require('../data/flashcardData.json');
 const { cards } = data;
 
-router.get( '/', ( req, res ) => {
+router.get( '/', ( req, res ) => {    //redirect users to the random cards, do not need /cards since we already here
   const numberOfCards = cards.length;
   const flashcardId = Math.floor( Math.random() * numberOfCards );
   res.redirect( `/cards/${flashcardId}?side=question` )
@@ -38,8 +40,15 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     const text = cards[id][side];
     const { hint } = cards[id];
+
+    if (!side) {
+      res.redirect(`/cards/${id}?side=question`);
+    }
+    const name = req.cookies.username;
+    const text - cards[id][side];
+    const { hint} = cards [id];
     
-    const templateData = { id, text };
+    const templateData = { id, text, name };
 
     if ( side === 'question' ) {
       templateData.hint = hint;
