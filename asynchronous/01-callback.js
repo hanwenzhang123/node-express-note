@@ -1,4 +1,3 @@
-
 //CALL BACKS
 function getUsers(cb){
   fs.readFile('data.json', 'utf8', (err, data) => {
