@@ -22,7 +22,7 @@ npm install express@4.15.2 --save
 
 
 
-//nodemon
+//nodemon - reload, automatically
 
 //when this command doesn't work:
 npm install -g nodemon
