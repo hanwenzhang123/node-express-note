@@ -21,6 +21,30 @@ npm install express --save  //save and add to the json file for the dependency
 npm install express@4.15.2 --save
 
 
+
+//nodemon
+
+//when this command doesn't work:
+npm install -g nodemon
+//recommend to use this one instead:
+sudo npm install -g nodemon
+
+//You can get rid of error by entering the command:
+npm i pstree.remy@1.1.0 -D
+
+
+nodemon -v:
+//"^1.18.6"
+node -v:
+//v10.13.0
+Operating system/terminal environment:
+//ubunutu 18.04
+Command you ran:
+npm start
+//in package.json I have "start": "nodemon"
+
+
+
 //questions
 Web frameworks take care of low level code, allowing you to focus on what makes your app different from anyone else's.
 
