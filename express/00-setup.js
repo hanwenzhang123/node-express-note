@@ -5,7 +5,7 @@ touch server.js
 
 npm init    //json set up
 //entry point: (server.js)
-npm install express --save
+npm install express --save    //it adds express into your json under dependencies
 
 //IDE
 const express = require('express');
