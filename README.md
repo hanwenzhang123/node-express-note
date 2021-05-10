@@ -1,12 +1,12 @@
 # node-express-note
-//command-line
+Terminal
 ```
 touch app.js index.html
 npm init
 npm install body-parser express request
 ```
 
-//IDE
+IDE
 ```JavaScript
 //jshint esversion: 6
 
