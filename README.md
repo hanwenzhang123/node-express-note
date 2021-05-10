@@ -23,7 +23,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + "/signup.html");  
 });  
 
-app.post('/contact', function(req, res){   
+app.post('/', function(req, res){   
     var =
 });  
 
