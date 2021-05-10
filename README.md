@@ -42,8 +42,8 @@ const https = require('https');
 
 const app = express();
 
-app.use(express.static('public')); 
-app.use(bodyParser.urlencoded({extended: true}));  
+app.use(express.static('public'));      //a static folder named public to store local data in order to access globally
+app.use(bodyParser.urlencoded({extended: true}));       //execute body-parser
 
 app.get('/', function(req, res){ 
     res.sendFile(__dirname + "/signup.html");  
@@ -68,20 +68,21 @@ app.post('/', function(req, res){
 
     }
 
-    const jsonData = JSON.stringify(data); 
+    const jsonData = JSON.stringify(data);        //turn the data to  string
 
-    const url = 'httos://us1.api.mailchimp.com/3.0/lists/0b188d00bd';
+    const url = 'https://us1.api.mailchimp.com/3.0/';
 
-    const option ={
+    const options = {
         method:'POST',
-        auth:'hanwen:0e2a391436c5c4d53b3fe86d2ca0d979-us1'
+        auth:'hanwen:0e2a391436c5c4d53b3fe86d2ca0d979-us10b188d00bd'
     }
 
-    const request = https.request(url, options, function(response){
+    const request = https.request(url, options, function(response) {
+
         response.on('data', function(data){
             console.log(JSON.parse(data));
-        })
-    })
+        });
+    });
 
     request.write(jsonData);
     request.end()
