@@ -78,6 +78,12 @@ app.post('/', function(req, res){
     }
 
     const request = https.request(url, options, function(response) {
+    
+        if (response.statusCode === 200) {
+            res.send('success')
+        } else {
+            res.send('error')
+        }
 
         response.on('data', function(data){
             console.log(JSON.parse(data));
