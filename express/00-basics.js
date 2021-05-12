@@ -54,6 +54,7 @@ const app = express();
 
 app.use(express.static('public'));      //a static folder named public to store local data in order to access globally
 app.use(bodyParser.urlencoded({extended: true}));       //execute body-parser
+//app.use(express.urlencoded({extended: true}));     //standard, use this middleware to parse the request body as url encoded data
 
 app.get('/', function(req, res){ 
     res.sendFile(__dirname + "/signup.html");  
