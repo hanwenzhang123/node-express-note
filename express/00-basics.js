@@ -54,7 +54,6 @@ const app = express();
 
 app.use(express.static('public'));      //a static folder named public to store local data in order to access globally
 app.use(bodyParser.urlencoded({extended: true}));       //execute body-parser
-//app.use(express.urlencoded({extended: true}));     //standard, use this middleware to parse the request body as url encoded data
 
 app.get('/', function(req, res){ 
     res.sendFile(__dirname + "/signup.html");  
@@ -67,3 +66,13 @@ app.post('/contact', function(req, res){
 app.listen(3000, function(){
     console.log("Server is running on port 3000");
 })
+  
+  
+  
+Note:
+  
+//To parse form data in POST request body:
+app.use(express.urlencoded({ extended: true }))  //standard, use this middleware to parse the request body as url encoded data
+
+// To parse incoming JSON in POST request body:
+app.use(express.json())
