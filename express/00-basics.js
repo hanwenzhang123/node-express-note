@@ -70,6 +70,10 @@ app.listen(3000, function(){
   
   
 Note:
+app.use
+//it runs every single time you have a request
+  //does not care what kind of request or route or path
+  //it just execute what is in app.use()
   
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }))  //standard, use this middleware to parse the request body as url encoded data
