@@ -3,7 +3,7 @@ Basic form of Express middleware
   // do something
   next();
 }
-
+ 
 app.use('/users', (req, res, next) => {});    
 // middleware read and modify the request and response objects - eg cookie parser modify the response object
 // next is a function that must be called when the work is done
