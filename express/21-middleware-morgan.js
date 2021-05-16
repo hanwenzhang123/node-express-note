@@ -8,29 +8,38 @@ like parsing the body
 middleware is a third parameter passed in the function usualy called next
 
 
-const express = require('express');
-const app = express();
-const morgan = require('morgan');
+//https://github.com/expressjs/morgan
+//HTTP request logger middleware for node.js  (incoming request)
 
+
+app.use([path,] callback[,callback...])
 //app.use is executed for every single request
 //app.use(express.json());  parse the json body on every request 
 //app.use(express.urlencoded());  every request use this specific function, urlencoded() returns a function
+
+
+const express = require('express');
+const app = express();
+const morgan = require('morgan');
 
 app.use(morgan('common'));    //it works whatever come to next
 
 app.use((req, res, next) => {    //without the next(), everything stops here
     console.log("THIS IS MY FIRST MIDDLEWARRE!!!")    //1
     next();
-    console.log("THIS IS MY FIRST - AFTER CALLING NEXT() MIDDLEWARRE!!!")   //3
+    console.log("THIS IS MY FIRST - AFTER CALLING NEXT() MIDDLEWARRE!!!")   //4
 })
 
 app.use((req, res, next) => {
     console.log("THIS IS MY SECOND MIDDLEWARRE!!!")   //2
     next();
 })
+
+app.use((req, res, next) => {
+    console.log("THIS IS MY THIRD MIDDLEWARE!!!")    //3
+    return next();
+})
   
 
-//https://github.com/expressjs/morgan
-//HTTP request logger middleware for node.js  (incoming request)
 
   
