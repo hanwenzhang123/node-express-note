@@ -24,7 +24,7 @@ app.get('/', function(req, res){
 });  
 
 app.post('/', function(req, res){   
-    var =
+    const =
 });  
 
 app.listen(3000, function(){
