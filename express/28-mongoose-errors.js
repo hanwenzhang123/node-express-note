@@ -1,4 +1,5 @@
 //example of mongoose error types
+//Error - product not found
 //validationError - path is required
 //castError - path error
 
@@ -9,9 +10,9 @@ const handleValidationErr = err => {
 }
 
 app.use((err, req, res, next) => {
-    console.log(err.name);
+    console.log(err.name);      //mongoose name for errors
     //We can single out particular types of Mongoose Errors:
-    if (err.name === 'ValidationError') err = handleValidationErr(err)
+    if (err.name === 'ValidationError') err = handleValidationErr(err)   
     next(err);    //then we pass to the next err handling
 })
 
