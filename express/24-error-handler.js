@@ -3,7 +3,7 @@
 //like if the first name and last name is empty when user not entering anything
 //catch that and handle it by express built in error handler that makes an arguler html page
 
-app.get('/error', (req, res) => {   //it set up by express to catch the error, 500 by default
+app.get('/error', (req, res) => {   //it set up by express to catch the error, 500 by default, server error
     chicken.fly()   //it is not defined
 })
 
