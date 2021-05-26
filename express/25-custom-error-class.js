@@ -1,16 +1,13 @@
 res.status(401)
 
-
 //AppError.js
-
-class AppError extends Error {    //extends the parent class error
+class AppError extends Error {    //extends the parent built-in class Error
     constructor(message, status) {
         super();    //superclass (parent) objects. we call the parent's constructor method and gets access to the parent's properties and methods:
         this.message = message;
         this.status = status;   //we need to make our own status
     }
 }
-
 module.exports = AppError;
 
 
@@ -39,8 +36,12 @@ app.get('/admin', (req, res) => {         // here is always throwing the AppErro
     throw new AppError('You are not an Admin!', 403)    //403- we know who you are but you are not an admin
 })
 
-app.use((err, req, res, next) => {
-    const { status = 500, message = 'Something Went Wrong' } = err;   //default 500 error. the AppError we defined
+app.use((err, req, res, next) => { 
+    const { status = 500, message = 'Something Went Wrong' } = err;   //default 500 error used as the AppError we defined
     res.status(status).send(message)
 })
-   
+    
+   //const {status} = err;
+   //res.status(status).send('errrorrrrr')          //if we do not give an default status code, anything that is not defined, the ugly html default error message shows
+   // res.status(status) with the status code then the message will send out for any undefined error
+    
