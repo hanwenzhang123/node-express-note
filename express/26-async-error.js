@@ -1,7 +1,8 @@
 //handling async errors 
 //- https://expressjs.com/en/guide/error-handling.html
 //asyc (req, res, next) => {
-//return next(    ) }   //error handling inside the next()
+//if (  ) {         //if something what what what, then return next(error)
+//return next(    ) }}   //error handling inside the next()
 
 app.get('/products/:id', async (req, res, next) => {
     const { id } = req.params;
@@ -22,12 +23,11 @@ app.get('/products/:id/edit', async (req, res, next) => {
 }))
 
 
-
 //handling more async errors!
 //for async -> try catch 
 //- we handle the error so at least the app is not breaking
 //like we could have a mongoose issue
-//for every async/promise function
+//for every async/promise middleware function
 
 app.post('/products', async (req, res, next) => {
   try {
