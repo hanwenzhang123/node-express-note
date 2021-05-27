@@ -1,4 +1,4 @@
-# express error handling
+# express error handler
 Express Error Handling
 
 ```javascript
