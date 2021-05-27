@@ -1,6 +1,6 @@
 Express Error Handling
 
-``` javascript
+```javascript
 //ExpressError.js
 
 class ExpressError extends Error { 
@@ -11,5 +11,4 @@ class ExpressError extends Error {
     }
 }
 module.exports = ExpressError;
-
 ```
