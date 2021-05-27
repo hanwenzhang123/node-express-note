@@ -1,29 +1,4 @@
 # node-express-note
-Express Error Handling
-```javascript
-//ExpressError.js
-
-class ExpressError extends Error { 
-    constructor(message, statusCode) {
-        super();
-        this.message = message;
-        this.statusCode = statusCode;
-    }
-}
-module.exports = ExpressError;
-```
-
-```javascript
-//catchAsync.js
-
-module.exports = func => {
-    return (req, res, next) => {
-        func(req, res, next).catch(next)
-    }
-}
-//use it to wrap our async function
-```
-
 Terminal
 ```
 touch app.js index.html
@@ -76,4 +51,29 @@ app.get('/', function(req, res){
 app.listen(3000, function(){
     console.log("Server is running on port 3000");
 })
+```
+
+Express Error Handler
+```javascript
+//ExpressError.js
+
+class ExpressError extends Error { 
+    constructor(message, statusCode) {
+        super();
+        this.message = message;
+        this.statusCode = statusCode;
+    }
+}
+module.exports = ExpressError;
+```
+
+```javascript
+//catchAsync.js
+
+module.exports = func => {
+    return (req, res, next) => {
+        func(req, res, next).catch(next)
+    }
+}
+//use it to wrap our async function
 ```
