@@ -26,7 +26,7 @@ app.get('/farms', async (req, res) => {
 })
 
 
-//improved way
+//improved way - res.locals.messages
 
 app.use((req, res, next) => {       //set up a middleware
     res.locals.messages = req.flash('success');     //locals object has the property that is local variables within the application.
