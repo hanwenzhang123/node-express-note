@@ -23,9 +23,24 @@ router.get('/deleteeverything', (req, res) => {   //localhost:3000/admin/deletee
 
 module.exports = router;
 
-//we can also use
 
 
+//we can also use do this for a specific route
+
+const isAdmin = (req, res, next) => {       //if we do localhost:3000/admin/123 we get sorry not an admin
+    if (req.query.isAdmin) {                //localhost:3000/admin/123?isAdmin=true  - we view the page
+        return next();
+    }
+    return res.send("SORRY NOT AN ADMIN!")  
+}
+
+router.get('/:id', isAdmin, (req, res) => {
+    res.send("VIEWING ONE SHELTER")
+})
+
+
+
+//req.query vs req.params
 
 req.query will return a JS object after the query string is parsed.
 /user?name=tom&age=55 
