@@ -11,6 +11,7 @@ app.get('/greet', function(req, res){
 
 app.get('/setname', function(req, res){ 
     res.cookie('name', 'stevie chicks');        //sending the cookie. now in the cookie of the browser for localhost 3000, we have the data name is stevie chicks in the cookie
+    res.cookie('animal', 'shirmp');     //we can set more than one cookie on every request
     res.send("sending chickcen");  
 });  
 
