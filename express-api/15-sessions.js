@@ -38,7 +38,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 
-const sessionOptions = { secret: 'thisisnotagoodsecret', resave: false, saveUninitialized: false }  //we set it as when restart the browser, session restart, we set not express
+const sessionOptions = { secret: 'thisisnotagoodsecret', resave: false, saveUninitialized: false }  //we set it as when restart the browser, session restart, we set the memorial to local not express
 app.use(session(sessionOptions));
 
 app.get('/viewcount', (req, res) => {
