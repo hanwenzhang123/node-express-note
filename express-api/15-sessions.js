@@ -27,4 +27,41 @@ app.get('/viewcount', (req, res) => {   //now once you get to  the viewcount pag
 app.listen(3000, () => {
     console.log('listening on port 3000')
 })
+
+  
+
+//more express session
+//resave: false - force the session to be saved back to the session store even if the session was never modified during the request
+//saveUninitialized: false - force a session that is uninitialized to be saved to the store, a session is uninitialized when it is new but not modified. 
+
+const express = require('express');
+const app = express();
+const session = require('express-session');
+
+const sessionOptions = { secret: 'thisisnotagoodsecret', resave: false, saveUninitialized: false }  //we set it as when restart the browser, session restart, we set not express
+app.use(session(sessionOptions));
+
+app.get('/viewcount', (req, res) => {
+    if (req.session.count) {
+        req.session.count += 1;
+    } else {
+        req.session.count = 1;
+    }
+    res.send(`You have viewed this page ${req.session.count} times`)
+})
+
+app.get('/register', (req, res) => {        //we specify username in the query like /register?username=hanwen
+    const { username = 'Anonymous' } = req.query;       //pass an username
+    req.session.username = username;    //whatever the username saved in the session or we use the default anonymous
+    res.redirect('/greet')
+})
+
+app.get('/greet', (req, res) => {
+    const { username } = req.session;
+    res.send(`Welcome back, ${username}`)       //we direct from register to here and use the username if the session information stored otherwise anonymous or undefined if not go to register
+})
+
+app.listen(3000, () => {
+    console.log('listening on port 3000')
+})
   
