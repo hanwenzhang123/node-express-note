@@ -24,3 +24,17 @@ app.get('/farms', async (req, res) => {
     const farms = await Farm.find({});
     res.render('farms/index', { farms, message: req.flash('success')})    //here we retrieve the flash message after the page redirect to here by using message: req.flash('success')
 })
+
+
+//improved way
+
+app.use((req, res, next) => {       //set up a middleware
+    res.locals.messages = req.flash('success');     //locals object has the property that is local variables within the application.
+    next();     //keep moving, now pass to every single ones
+})
+
+app.get('/farms', async (req, res) => {
+    const farms = await Farm.find({});
+    res.render('farms/index', { farms })        //no needs that message line
+})
+  
