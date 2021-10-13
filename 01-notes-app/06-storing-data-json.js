@@ -55,3 +55,20 @@ console.log(data.title); //then we access a property from it
 console.log(JSON.parse(dataBuffer));
 //{ title: 'Ego is the enemy', author: 'Ryan Holiday' }
 
+
+//Challenge
+const fs = require('fs')
+
+const dataBuffer = fs.readFileSync('1-json.json')
+const dataJSON = dataBuffer.toString()
+const user = JSON.parse(dataJSON)   //convert to JS object
+
+user.name = 'Gunther'
+user.age = 54
+
+const userJSON = JSON.stringify(user)     //conver JS to JSON
+fs.writeFileSync('1-json.json', userJSON)
+
+//1-json.json
+{"name":"Gunther","age":54}
+  
