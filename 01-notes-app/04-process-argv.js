@@ -1,4 +1,5 @@
-//Getting User Inputs
+//Getting Inputs from Users
+
 console.log(process.argv);
 //Always return 3 string inside the process.argv
 1. path to node js executable in your machine
