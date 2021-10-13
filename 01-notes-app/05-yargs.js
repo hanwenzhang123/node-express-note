@@ -66,6 +66,7 @@ yargs.command({
 
 console.log(yargs.argv);
 
+
 //node app.js read
 Reading a note!
 { _: [ 'add' ], '$0': 'app.js' }
@@ -78,8 +79,12 @@ Commands:
   app.js read    Read a note
   app.js list    List your notes
    
-//node app.js add --title="My Title" --body="My Body"   //need both title and body, otherwise missing required argument
+//node app.js add --title="My Title" --body="My Body"   
 Title: My Title
 Body: My Body
 { _: [ 'add' ], title: 'My Title', body: 'My Body', '$0': 'app.js' }
  
+//need both title and body, otherwise missing required argument
+//node app.js add --title="My Title"
+Missing required argument: body
+  
