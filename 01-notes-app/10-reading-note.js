@@ -3,10 +3,6 @@ const fs = require("fs");
 const chalk = require("chalk");
 const nodemon = require("nodemon");
 
-const getNotes = () => {
-  return "Your notes...";
-};
-
 const addNote = (title, body) => {
   const notes = loadNote();
   //filter function will run the entire list while find function return the first match
@@ -81,7 +77,6 @@ const loadNote = () => {
 };
 
 module.exports = {
-  getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
   listNotes: listNotes,
