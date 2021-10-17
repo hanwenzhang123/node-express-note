@@ -3,11 +3,6 @@
 __dirname - contains a path to the directory the current script lives in.
 __filename - provides the path to the directory the file lives in, it provides the path to the file itself.
 
-//path.join()
-//a method joins the specified path segments into one path.
-var path = require('path');
-var x = path.join(paths);
-
 //app.use()
 a way to customize your server
 
@@ -18,6 +13,15 @@ used to assigns the setting name to value
 //express.static()
 takes a value you want to serve
 serve static files such as images, CSS files, and JavaScript files
+exposes a directory or a file to a particular URL so its contents can be publicly accessed
+// Static Middleware 
+app.use(express.static(path.join(__dirname, 'public')))
+
+//path.join()
+//a method joins the specified path segments into one path.
+var path = require('path');
+var x = path.join(paths);
+
 
 //app.js 
 //we serve static files, so no needs app.get for every single route
