@@ -45,7 +45,6 @@ const geocode = (address, callback) => {
 module.exports = geocode;
 
 
-
 //utils/forecast.js
 const request = require("request");
 
@@ -78,3 +77,4 @@ const forecast = (latitude, longitude, callback) => {
 };
 
 module.exports = forecast;
+ 
