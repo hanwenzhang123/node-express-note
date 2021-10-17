@@ -26,7 +26,7 @@ const geocode = (address, callback) => {
 
   request({ url: url, json: true }, (error, response) => {
     //pass 2 arguments: object to request, and the callback function
-    //the error and data we passed in when we call the function in app.js
+    //a second argument when the request completes, either error or data is undefined
     if (error) {
       callback("Unable to connect to location services!", undefined); //2 args, error and data
     } else if (response.body.features.length === 0) {
@@ -58,7 +58,7 @@ const forecast = (latitude, longitude, callback) => {
 
   request({ url: url, json: true }, (error, response) => {
     //pass 2 arguments: object to request, and the callback function
-    //the error and data we passed in when we call the function in app.js
+    //a second argument when the request completes, either error or data is undefined
     if (error) {
       callback("Unable to connect to weather service!", undefined);
     } else if (response.body.error) {
