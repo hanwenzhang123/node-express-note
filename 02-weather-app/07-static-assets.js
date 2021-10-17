@@ -32,7 +32,7 @@ const express = require('express')
 const app = express()
 const publicDirectoryPath = path.join(__dirname, '../public')   //point to a path
 
-app.set('view engine', 'hbs')   //tell which templating engine you use
+app.set('view engine', 'hbs')   //tell which templating engine you use, like handlerbar, ejs
 app.use(express.static(publicDirectoryPath))
 
 app.get('/weather', (req, res) => {
