@@ -34,8 +34,8 @@ const geocode = (address, callback) => {
     } else {
       callback(undefined, {
         //if the request is good, we get this object
-        latitude: response.body.features[0].center[0],
-        longitude: response.body.features[0].center[1],
+        latitude: response.body.features[0].center[1],
+        longitude: response.body.features[0].center[0],
         location: response.body.features[0].place_name,
       });
     }
