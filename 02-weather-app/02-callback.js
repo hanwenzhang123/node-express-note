@@ -1,4 +1,4 @@
-callback 
+//callback 
 - a function we provide as an argument to another function with the intention of having it called later on.
 
 //asynchronous - like setTimeout() is going to call its function at some point in the future
