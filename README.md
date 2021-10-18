@@ -1,5 +1,6 @@
 # node-express-note
-Basic
+### Node Setup
+##### Basic
 ```JavaScript
 const express = require('express');
 const app = express();
@@ -19,14 +20,14 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
 ```
-Terminal
+##### Terminal
 ```
-touch app.js index.html
-npm init
-npm install body-parser express request
+npm init -y
+npm install nodemon --save-dev
+npm install express body-parser request
 ```
 
-IDE
+### IDE
 ```JavaScript
 //jshint esversion: 6
 
@@ -52,7 +53,7 @@ app.listen(3000, function(){
 })
 ```
 
-EJS
+### EJS
 ```JavaScript
 const express = require('express');
 const ejs = require('ejs');
@@ -73,7 +74,7 @@ app.listen(3000, function(){
 })
 ```
 
-Express Error Handler
+### Express Error Handler
 ```javascript
 //ExpressError.js
 
