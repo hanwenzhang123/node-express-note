@@ -35,7 +35,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
              return console.log('Unable to insert user')
          }
 
-         console.log(result.ops)        //ops -> all the document that we inserted, check result
+         console.log(result.ops)        //ops -> all the document that we inserted in array format with documents inside, check result
      })
 
      db.collection('users').insertMany([        //db for initialization indicating which collection, insert many with objects in an array
@@ -47,11 +47,11 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
              age: 27
          }
      ], (error, result) => {
-         if (error) {
-             return console.log('Unable to insert documents!')
+         if (error) {       //check if error, and if there is an error
+             return console.log('Unable to insert documents!')      //return stops function execution
          }
 
-         console.log(result.ops)
+         console.log(result.ops)        //pass the error handling then we can print out the result
      })
 
     db.collection('tasks').insertMany([
