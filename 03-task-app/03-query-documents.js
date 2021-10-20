@@ -1,6 +1,9 @@
 //Querying Documents - READ
-// CRUD create read update delete
+https://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html
+findone - find individual data
+find - the data meet the cretaria
 
+//mongodb.js
 const { MongoClient, ObjectID } = require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
@@ -13,6 +16,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName)
     
+    //findOne requires 2 arguments, 1st an object for search cretaria, 2nd callback function
     db.collection('users').findOne({ _id: new ObjectID("5c1113239cbfe605241f9071") }, (error, user) => {
         if (error) {
             return console.log('Unable to fetch')
