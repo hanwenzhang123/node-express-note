@@ -30,7 +30,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     db.collection('users').insertOne({      //need db reference, collection like tables, inset data, will receive unique _id identifier for each data set
         name: 'Andrew',
         age: 27
-     }), (error, result) => {
+     }), (error, result) => {       //second argument as another callback to handle error or print out saved data
          if (error) {
              return console.log('Unable to insert user')
          }
