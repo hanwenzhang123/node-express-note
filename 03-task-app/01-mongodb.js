@@ -28,7 +28,6 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     const db = client.db(databaseName)      //reference to the specific database we want to connect to, then we can manipulate that db
     
     db.collection('users').insertOne({      //need db reference, collection like tables, inset data, will receive unique _id identifier for each data set
-        __id: id,       //we set our own id
         name: 'Andrew',
         age: 27
      }), (error, result) => {       //second argument as another callback to handle error or print out saved data
