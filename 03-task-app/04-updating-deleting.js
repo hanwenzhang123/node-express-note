@@ -12,22 +12,22 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName)
     
-    // db.collection('users').updateOne({
-    //     _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
-    // }, {
-    //     $inc: {
-    //         age: 1
-    //     }
-    // }).then((result) => {
-    //     console.log(result)
-    // }).catch((error) => {
-    //     console.log(error)
-    // })
+    db.collection('users').updateOne({       //1st argument - an object with search cretaria
+        _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
+    }, {
+        $inc: {     //$inc - inccrement a number
+            age: 1
+        }
+    }).then((result) => {       //then when promise fulfilled
+        console.log(result)
+    }).catch((error) => {       //catch when promise rejected
+        console.log(error)
+    })
 
-    db.collection('tasks').updateMany({
+    db.collection('tasks').updateMany({     //update all data fit the search cretaria
         completed: false
     }, {
-        $set: {
+        $set: {     //$set - to change the selected object field valuue
             completed: true
         }
     }).then((result) => {
@@ -52,13 +52,13 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName)
     
-    // db.collection('users').deleteMany({
-    //     age: 27
-    // }).then((result) => {
-    //     console.log(result)
-    // }).catch((error) => {
-    //     console.log(error)
-    // })
+    db.collection('users').deleteMany({     //just provide the search cretaria
+        age: 27
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(error)
+    })
 
     db.collection('tasks').deleteOne({
         description: "Clean the house"
