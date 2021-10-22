@@ -14,7 +14,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     
     db.collection('users').updateOne({       //1st argument - an object with search cretaria
         _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
-    }, {
+    }, {                                     //2nd argument - how you want to update the information
         $inc: {     //$inc - inccrement a number
             age: 1
         }
@@ -52,7 +52,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName)
     
-    db.collection('users').deleteMany({     //just provide the search cretaria
+    db.collection('users').deleteMany({     //just provide the search cretaria to the items you want to delete
         age: 27
     }).then((result) => {
         console.log(result)
@@ -60,7 +60,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
         console.log(error)
     })
 
-    db.collection('tasks').deleteOne({
+    db.collection('tasks').deleteOne({      //only detele one individual element
         description: "Clean the house"
     }).then((result) => {
         console.log(result)
