@@ -14,12 +14,10 @@ app.listen(3000, ()=>{
 })
 ```
 ```JavaScript
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+//configure express to auto pass the incoming JSON to an object so we can access it in our request
+app.use(express.json()) 
 ```
+
 ##### Terminal
 ```
 npm init -y
@@ -35,10 +33,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 
-const app = express();
+const app = express();  //setup express
 
-app.use(express.static('public')); 
-app.use(bodyParser.urlencoded({extended: true}));      
+app.use(express.static('public'));  //app.use: customize our server
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res){ 
     res.sendFile(__dirname + "/index.html");  
@@ -48,9 +46,11 @@ app.post('/', function(req, res){
     const =
 });  
 
-app.listen(3000, function(){
-    console.log("Server is running on port 3000");
-})
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
 ```
 
 ### EJS
@@ -90,7 +90,6 @@ module.exports = ExpressError;
 
 ```javascript
 //catchAsync.js
-
 module.exports = func => {
     return (req, res, next) => {
         func(req, res, next).catch(next)
