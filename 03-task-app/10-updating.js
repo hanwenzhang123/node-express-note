@@ -1,3 +1,4 @@
+//src/index.js
 const express = require('express')
 require('./db/mongoose')
 const User = require('./models/user')
@@ -126,4 +127,13 @@ app.patch('/tasks/:id', async (req, res) => {
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
+})
+
+//src/db/mongoose.js
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 })
