@@ -2,6 +2,11 @@
 // Resource Reading Endpoints with Promises
 - Set up Promise based HTTP REST API routes/endpoints
 
+//https://mongoosejs.com/docs/guide.html
+Mongoose.save() - save to the database
+Mongoose.send() - send from the client to the server
+Mongoose.find({}) - looking for everything in the database
+Mongoose..findById() - looking for a specific id
 
 //src/index.js - starting point of our application
 const express = require('express')
