@@ -12,6 +12,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName)
     
+    //return promise automatically
     db.collection('users').updateOne({       //1st argument - an object with search cretaria
         _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
     }, {                                     //2nd argument - how you want to update the information
