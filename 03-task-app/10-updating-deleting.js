@@ -1,3 +1,6 @@
+// Resource Updating Endpoints
+// Resource Deleting Endpoints
+
 //src/index.js
 const express = require('express')
 require('./db/mongoose')
@@ -45,24 +48,24 @@ app.get('/users/:id', async (req, res) => {
     }
 })
 
-app.patch('/users/:id', async (req, res) => {
+app.patch('/users/:id', async (req, res) => {     //updating, mongodb will ignore the data if the key is not set in model
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'email', 'password', 'age']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    const allowedUpdates = ['name', 'email', 'password', 'age'] //what we allow to update, not things like id
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update)) //returns true if all elements in an array "updates" pass the includes test
 
-    if (!isValidOperation) {
+    if (!isValidOperation) {    //error handling for valid operation
         return res.status(400).send({ error: 'Invalid updates!' })
     }
 
-    try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+    try {    //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object that update to, req.body is when we created 
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })  //3rd option object
     
         if (!user) {
             return res.status(404).send()
         }
 
         res.send(user)
-    } catch (e) {
+    } catch (e) {   //wrong when something goes wrong, like validation
         res.status(400).send(e)
     }
 })
@@ -101,13 +104,13 @@ app.get('/tasks', async (req, res) => {
     }
 })
 
-app.get('/tasks/:id', async (req, res) => {
-    const _id = req.params.id
+app.get('/tasks/:id', async (req, res) => { //just id is enough to delete the data
+    const _id = req.params.id       //get the id
 
     try {
         const task = await Task.findById(_id)
 
-        if (!task) {
+        if (!task) {    //if there is no this user
             return res.status(404).send()
         }
 
@@ -117,17 +120,17 @@ app.get('/tasks/:id', async (req, res) => {
     }
 })
 
-app.patch('/tasks/:id', async (req, res) => {
+app.patch('/tasks/:id', async (req, res) => {   //updating the task by its id
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update)) //for each individual update is included in the array
 
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates!' })
     }
 
-    try {
-        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true})
+    try {   //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object that update to, req.body is when we created 
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true})   //3rd option object
 
         if (!task) {
             return res.status(404).send()
@@ -139,7 +142,7 @@ app.patch('/tasks/:id', async (req, res) => {
     }
 })
 
-app.delete('/tasks/:id', async (req, res) => {
+app.delete('/tasks/:id', async (req, res) => {  //just id is enough to delete the data
     try {
         const task = await Task.findByIdAndDelete(req.params.id)
 
