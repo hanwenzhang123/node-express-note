@@ -60,8 +60,8 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save()
-        const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        const token = await user.generateAuthToken()   //generate the token after the user has saved, and we get the token back from the async function using await
+        res.status(201).send({ user, token })       //send back an object with both user and token
     } catch (e) {
         res.status(400).send(e)
     }
@@ -196,6 +196,7 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+//ALL reusbale functions that you can use in the route files
 userSchema.methods.generateAuthToken = async function () {    //create the generateAuthToken methods (instance method, available in instances)
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')   //create token: provide payload (uniquely identifier the user) and secret string
