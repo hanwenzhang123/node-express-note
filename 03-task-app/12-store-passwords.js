@@ -136,7 +136,7 @@ router.get('/users/:id', async (req, res) => {
     }
 })
 
-router.patch('/users/:id', async (req, res) => {    //changing the password
+router.patch('/users/:id', async (req, res) => {    //changing the update process to make sure the middleware runs correctly
     const updates = Object.keys(req.body)   //the list of the updates
     const allowedUpdates = ['name', 'email', 'password', 'age']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -176,3 +176,31 @@ router.delete('/users/:id', async (req, res) => {
 })
 
 module.exports = router
+
+
+//practice challenge with updating tasks
+//routers/task.js
+router.patch('/tasks/:id', async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['description', 'completed']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        const task = await Task.findById(req.params.id)
+
+        updates.forEach((update) => task[update] = req.body[update])    //assign the updated task
+        await task.save()       //save the updated task
+
+        if (!task) {
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
