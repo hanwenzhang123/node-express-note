@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({  //new operator new mongoose.Schema(), 
     },
     email: {
         type: String,
+        unique: true,   //make sure the email for user is unique
         required: true,
         trim: true,
         lowercase: true,
@@ -81,16 +82,16 @@ const userSchema = new mongoose.Schema({  //new operator new mongoose.Schema(), 
     }
 })
 
-userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-
-    if (!user) {
-        throw new Error('Unable to login')
+userSchema.statics.findByCredentials = async (email, password) => {     //userSchema.static for setting up something directly in the routers/user.js with findByCredentials
+    const user = await User.findOne({ email })  //works like findById, but here findOne returns a single user that fits our search cretaria passed in with object
+                                    //{email: email} - email in database is the same value as our passing in email value
+    if (!user) {        //when there is no such user
+        throw new Error('Unable to login')  //end the execution and throw the error
     }
-
-    const isMatch = await bcrypt.compare(password, user.password)
-
-    if (!isMatch) {
+    
+    //when it works, we have the user in database
+    const isMatch = await bcrypt.compare(password, user.password)   //here we check the password whether correct
+    if (!isMatch) {     //if the password is not matched
         throw new Error('Unable to login')
     }
 
@@ -132,8 +133,8 @@ router.post('/users', async (req, res) => {
 
 router.post('/users/login', async (req, res) => {   //endpoint for logging in users
     try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)    //find the user by the email and check the password
-        res.send(user)
+        const user = await User.findByCredentials(req.body.email, req.body.password)    //find the user by the email and check the password, logics in models/user.js
+        res.send(user)      //send the user back
     } catch (e) {
         res.status(400).send()
     }
