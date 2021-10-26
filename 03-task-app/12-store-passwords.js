@@ -2,6 +2,8 @@
 https://www.npmjs.com/package/bcryptjs
 npm i bcryptjs
 
+//Logging in Users
+
 //index.js
 const express = require('express')
 require('./db/mongoose')
@@ -79,6 +81,23 @@ const userSchema = new mongoose.Schema({  //new operator new mongoose.Schema(), 
     }
 })
 
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Error('Unable to login')
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return user
+}
+
+//Hash the plain text password before saving
 //middleware to change the password with hash
 userSchema.pre('save', async function (next) {  //pre - before any event; 1st is the name of the event, here is before the data has saved; 2nd is the function to run
     const user = this   //this gives us the object (the individual user) that is about to be saved (not saved yet)
@@ -108,6 +127,15 @@ router.post('/users', async (req, res) => {
         res.status(201).send(user)
     } catch (e) {
         res.status(400).send(e)
+    }
+})
+
+router.post('/users/login', async (req, res) => {   //endpoint for logging in users
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password)    //find the user by the email and check the password
+        res.send(user)
+    } catch (e) {
+        res.status(400).send()
     }
 })
 
@@ -146,7 +174,7 @@ router.patch('/users/:id', async (req, res) => {    //changing the update proces
     }
 
     try {
-        const user = await User.findById(req.params.id)   //get the user data through its id
+        const user = await User.findById(req.params.id)   //get the user data through its id in the User schema
 
         updates.forEach((update) => user[update] = req.body[update])  //iterate the updates array, assign updated value through "user[update] = req.body[update]"
         await user.save()   //save the data, here is where our middleware would get executed
