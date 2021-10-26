@@ -1,3 +1,5 @@
+//Separate Route Files - Refactoring
+
 //index.js
 const express = require('express')
 require('./db/mongoose')
@@ -8,8 +10,8 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.use(userRouter)
-app.use(taskRouter)
+app.use(userRouter)     //app.use(): customize our server. 
+app.use(taskRouter)     //app.use() here to use the router we created
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
@@ -18,7 +20,7 @@ app.listen(port, () => {
 //routers/user.js
 const express = require('express')
 const User = require('../models/user')
-const router = new express.Router()
+const router = new express.Router()     //create the express router
 
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
@@ -92,7 +94,7 @@ router.delete('/users/:id', async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = router     //export the router so we can use in app.use()
 
 //routers/task.js
 const express = require('express')
