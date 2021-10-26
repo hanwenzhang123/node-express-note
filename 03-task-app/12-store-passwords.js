@@ -149,7 +149,7 @@ router.patch('/users/:id', async (req, res) => {    //changing the update proces
         const user = await User.findById(req.params.id)   //get the user data through its id
 
         updates.forEach((update) => user[update] = req.body[update])  //iterate the updates array, assign updated value through "user[update] = req.body[update]"
-        await user.save()   //save the data
+        await user.save()   //save the data, here is where our middleware would get executed
 
         if (!user) {
             return res.status(404).send()
@@ -193,7 +193,7 @@ router.patch('/tasks/:id', async (req, res) => {
         const task = await Task.findById(req.params.id)
 
         updates.forEach((update) => task[update] = req.body[update])    //assign the updated task
-        await task.save()       //save the updated task
+        await task.save()       //save the updated task, here is where our middleware would get executed
 
         if (!task) {
             return res.status(404).send()
