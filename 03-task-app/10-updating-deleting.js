@@ -10,7 +10,7 @@ const Task = require('./models/task')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(express.json())
+app.use(express.json())     //for create and update
 
 app.post('/users', async (req, res) => {
     const user = new User(req.body)
@@ -57,28 +57,28 @@ app.patch('/users/:id', async (req, res) => {     //updating, mongodb will ignor
         return res.status(400).send({ error: 'Invalid updates!' })
     }
 
-    try {    //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object that update to, req.body is when we created 
+    try {    //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object we update to, req.body is what we created through HTTP request
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })  //3rd option object
     
         if (!user) {
             return res.status(404).send()
         }
 
-        res.send(user)
-    } catch (e) {   //wrong when something goes wrong, like validation
-        res.status(400).send(e)
-    }
+        res.send(user)      //send back with the update applied
+    } catch (e) {    //wrong when something goes wrong, like validation
+        res.status(400).send(e)  //send back the error object
+    }   
 })
 
 app.delete('/users/:id', async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
+        const user = await User.findByIdAndDelete(req.params.id)    //store the user we are going to delete
 
-        if (!user) {
+        if (!user) {     //if there is no such a user
             return res.status(404).send()
         }
 
-        res.send(user)
+        res.send(user)  //send the user we try to delete
     } catch (e) {
         res.status(500).send()
     }
@@ -110,11 +110,11 @@ app.get('/tasks/:id', async (req, res) => { //just id is enough to delete the da
     try {
         const task = await Task.findById(_id)
 
-        if (!task) {    //if there is no this user
+        if (!task) {    //if there is no such a task
             return res.status(404).send()
         }
 
-        res.send(task)
+        res.send(task)  //send the task we try to delete
     } catch (e) {
         res.status(500).send()
     }
@@ -129,7 +129,7 @@ app.patch('/tasks/:id', async (req, res) => {   //updating the task by its id
         return res.status(400).send({ error: 'Invalid updates!' })
     }
 
-    try {   //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object that update to, req.body is when we created 
+    try {   //findByIdAndUpdate() - 1st: the id you want to update, 2nd: the object we update to, req.body - the data will be pass in through the http request
         const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true})   //3rd option object
 
         if (!task) {
