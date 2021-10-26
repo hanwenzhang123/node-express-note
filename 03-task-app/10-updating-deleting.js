@@ -136,7 +136,7 @@ app.patch('/tasks/:id', async (req, res) => {   //updating the task by its id
             return res.status(404).send()
         }
 
-        res.send(task)
+        res.send(task)  //send back with the updated task body
     } catch (e) {
         res.status(400).send(e)
     }
