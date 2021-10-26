@@ -60,7 +60,7 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save()
-        const token = await user.generateAuthToken()   //generate the token after the user has saved, and we get the token back from the async function using await
+        const token = await user.generateAuthToken()   //generate the token after the user has saved, and we get the token back from the async function using await, accessible on instances
         res.status(201).send({ user, token })       //send back an object with both user and token
     } catch (e) {
         res.status(400).send(e)
@@ -69,8 +69,8 @@ router.post('/users', async (req, res) => {
 
 router.post('/users/login', async (req, res) => {
     try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()  //get the token, generateAuthToken() to get the token back, name is named by our own in models/user.js
+        const user = await User.findByCredentials(req.body.email, req.body.password)    //static method, accessible on the model
+        const token = await user.generateAuthToken()  //get the token, generateAuthToken() to get the token back, name is named by our own in models/user.js, instance methods, user is an instance
         res.send({ user, token })   //send back object with two properties, user and token
     } catch (e) {
         res.status(400).send()
