@@ -17,8 +17,9 @@ const Task = require('./models/task')   //require the task model
 const app = express()   //setup express
 const port = process.env.PORT || 3000   //define the port
 
-app.use(express.json()) //app.use: customize our server. here we configure express to automatically pass the incoming JSON to an object so we can access it in our request
-
+app.use(express.json()) //app.use: customize our server. //express.json() used for create and update converting JSON data
+                        //we configure express to automatically pass the incoming JSON to an object so we can access it in our request
+                    
 app.post('/users', (req, res) => {  //when use app.post, path and callback function
     const user = new User(req.body)   //create the new user using req.body (incoming data body)
 
