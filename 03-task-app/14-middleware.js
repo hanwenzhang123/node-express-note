@@ -32,18 +32,18 @@ const jwt = require('jsonwebtoken')   //import jwtwebtoken so we can validate th
 const User = require('../models/user')  //load the user model so we can find them in the database once we've validated the auth token
 
 const auth = async (req, res, next) => {
-    try {
-        const token = req.header('Authorization').replace('Bearer ', '')
+    try {   //additional information to the server, goes to headr setup the key value pair
+        const token = req.header('Authorization').replace('Bearer ', '')    
         const decoded = jwt.verify(token, 'thisismynewcourse')
-        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token }) //grab the user from the database, checks if it is part of token array - 'tokens.token': token 
 
-        if (!user) {
-            throw new Error()
+        if (!user) { 
+            throw new Error()   //throw error when the user not exist
         }
 
-        req.user = user
+        req.user = user //store the existing user, easier to access to the data
         next()  //make sure the associated route handler to run
-    } catch (e) {
+    } catch (e) {   //the user is not authenticated
         res.status(401).send({ error: 'Please authenticate.' })
     }
 }
@@ -79,7 +79,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-// router.get('/users', auth, async (req, res) => {
+// router.get('/users', auth, async (req, res) => {   //apply the middleware, before passing in the route handler
 //     try {
 //         const users = await User.find({})
 //         res.send(users)
@@ -88,7 +88,7 @@ router.post('/users/login', async (req, res) => {
 //     }
 // })
 
-router.get('/users/me', auth, async (req, res) => {   //apply the middleware
+router.get('/users/me', auth, async (req, res) => {   //apply the middleware, before passing in the route handler
     res.send(req.user)
 })
 
