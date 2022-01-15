@@ -1,6 +1,6 @@
 //print error
 
-request.on('error', error => console.error('Problem with request: ${error.message}`)); 
+request.on('error', error => console.error(`Problem with request: ${error.message}`)); 
                                            
 //a request on an event, string error means error event, call back when the error event is submitted
 
@@ -10,7 +10,6 @@ request.on('error', error => console.error('Problem with request: ${error.messag
 // try {} - A try statement stars with the try keyword and the code wrappeed in a block you want to execute
 // If an error occurs within this block, it throws an error in which you can catch the errror, and you have access to the error messgae
 catch (error) { console.error(error.message); }
-
 
 
 
@@ -25,8 +24,7 @@ const https = require("https");
 const request = https.get("https://teamtreehouse.com/chalkers.json", response => {
   console.log(response.statusCode);
 });
-  request.on('error', error => console.error());
-
+request.on('error', error => console.error());
 
 
 //to run printError() if there is an error on a request, use the following:
