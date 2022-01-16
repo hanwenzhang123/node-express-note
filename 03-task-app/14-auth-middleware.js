@@ -25,16 +25,16 @@ app.use((req, res, next) => {   //maintainance mode with middleware, disable all
 })
 
 
-//Accepting Authentication Tokens using Middleware
+//Accepting Authentication Tokens using Middleware - auth-middleware
 //instead of creating middleware in index.js, it is better to define it in a separate file so we can keep things nice and organized.
-//middleware/auth.js - setup and define the authentication middleware
+//src/middleware/auth.js - setup and define the authentication middleware
 const jwt = require('jsonwebtoken')   //import jwtwebtoken so we can validate the token being provided
 const User = require('../models/user')  //load the user model so we can find them in the database once we've validated the auth token
 
 const auth = async (req, res, next) => {
     try {   //additional information to the server, goes to headr setup the key value pair
-        const token = req.header('Authorization').replace('Bearer ', '')    
-        const decoded = jwt.verify(token, 'thisismynewcourse')
+        const token = req.header('Authorization').replace('Bearer ', '')     //access incoming token header and replace
+        const decoded = jwt.verify(token, 'thisismynewcourse')  //verify the token is correctly, user model where we create the token secret
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token }) //grab the user from the database, checks if it is part of token array - 'tokens.token': token 
 
         if (!user) { 
