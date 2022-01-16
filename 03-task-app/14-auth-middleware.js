@@ -104,37 +104,11 @@ router.post('/users/logoutAll', auth, async (req, res) => {        //log out all
     }
 })
 
-
-// router.get('/users', auth, async (req, res) => {   //apply the middleware, before passing in the route handler
-//     try {
-//         const users = await User.find({})
-//         res.send(users)
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-// })
-
 router.get('/users/me', auth, async (req, res) => {   //apply the middleware, before passing in the route handler
     res.send(req.user)
 })
 
-router.get('/users/:id', async (req, res) => {
-    const _id = req.params.id
-
-    try {
-        const user = await User.findById(_id)
-
-        if (!user) {
-            return res.status(404).send()
-        }
-
-        res.send(user)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
-router.patch('/users/:id', async (req, res) => {
+router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -144,30 +118,31 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(req.params.id)
+//         const user = await User.findById(req.params.id) - no longer need because we do not do '/users/:id anymore'
 
-        updates.forEach((update) => user[update] = req.body[update])
-        await user.save()
+        updates.forEach((update) => req.user[update] = req.body[update])
+        await req.user.save()
 
-        if (!user) {
-            return res.status(404).send()
-        }
+//         if (!user) {
+//             return res.status(404).send()
+//         }
 
-        res.send(user)
+        res.send(req.user)
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/me', auth, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
+//         const user = await User.findByIdAndDelete(req.user._id) //we can do req.user._id because we have auth middlware
 
-        if (!user) {
-            return res.status(404).send()
-        }
+//         if (!user) {
+//             return res.status(404).send()
+//         }
 
-        res.send(user)
+        await req.user.remove();    //no needs above codes
+        res.send(req.user)
     } catch (e) {
         res.status(500).send()
     }
