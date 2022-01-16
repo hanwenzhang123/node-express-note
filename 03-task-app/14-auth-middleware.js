@@ -40,8 +40,9 @@ const auth = async (req, res, next) => {
         if (!user) { 
             throw new Error()   //throw error when the user not exist
         }
-
-        req.user = user //store the existing user, easier to access to the data
+        
+        req.token = token;
+        req.user = user;     //store the existing user, easier to access to the data
         next()  //make sure the associated route handler to run
     } catch (e) {   //the user is not authenticated
         res.status(401).send({ error: 'Please authenticate.' })
@@ -73,11 +74,36 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        res.send({ user, token }        //getting auto JSON.stringify() when we send
     } catch (e) {
         res.status(400).send()
     }
 })
+
+router.post('/users/logout', auth, async (req, res) => {    //with the authentication middleware
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {   //the token is the object with token property
+            return token.token !== req.token   //when not the same, then true to log out
+        })
+        await req.user.save();
+        
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+})
+
+router.post('/users/logoutAll', auth, async (req, res) => {        //log out all user sessions
+    try {
+        req.user.tokens = [];
+        await req.user.save();
+        
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+})
+
 
 // router.get('/users', auth, async (req, res) => {   //apply the middleware, before passing in the route handler
 //     try {
@@ -148,3 +174,109 @@ router.delete('/users/:id', async (req, res) => {
 })
 
 module.exports = router
+
+    
+//src/models/user.js
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email is invalid')
+            }
+        }
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 7,
+        trim: true,
+        validate(value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('Password cannot contain "password"')
+            }
+        }
+    },
+    age: {
+        type: Number,
+        default: 0,
+        validate(value) {
+            if (value < 0) {
+                throw new Error('Age must be a postive number')
+            }
+        }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
+})
+
+userSchema.methods.toJSON = function () {
+  //hiding private user data, toJSON has to match, no needs to specifically call the method
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+}
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
+
+    user.tokens = user.tokens.concat({ token })
+    await user.save()
+
+    return token
+}
+
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Error('Unable to login')
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return user
+}
+
+// Hash the plain text password before saving
+userSchema.pre('save', async function (next) {
+    const user = this
+
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    next()
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
+     
