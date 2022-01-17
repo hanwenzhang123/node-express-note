@@ -1,6 +1,9 @@
 npm i multer
 take the file, grab its binary data and send that off to the server.
 
+npm i sharp 
+Auto-Cropping and Image Formatting
+
 //src/index.js
 const express = require('express')
 require('./db/mongoose')
@@ -44,9 +47,10 @@ app.listen(port, () => {
 
 //router/user.js
 const multer = require('multer') 
+const sharp = require('sharp') 
 
 const upload = multer({
-  //dest: "avatars",  //destination directory
+  //dest: "avatars",  //destination directory, now we save the avatar to req.file.buffer
     limits: { 
         fileSize: 1000000
     },
@@ -65,8 +69,8 @@ const upload = multer({
 })
 
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {  //make sure the user authenticated
-    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-    req.user.avatar = buffer    //req.user.avatar = req.file.buffer - set the avatar
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()    //use sharp to re-size, toBuffer() to convert back to buffer
+    req.user.avatar = buffer    //req.user.avatar = req.file.buffer - set the avatar, req.file.buffer is where the file stores
     await req.user.save()   //save image to user profile
     res.send()    //send 200
 }, (error, req, res, next) => {   //error handling
