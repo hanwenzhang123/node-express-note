@@ -21,7 +21,8 @@ io.on('connection', (socket) => { //socket is an object that contains informatio
 
     socket.on('increment', () => {  //receive event from client to server
         count++   //action - increment the count
-        io.emit('countUpdated', count)  //client gets the updated count, provide the count as data we send
+        io.emit('countUpdated', count)  //connected clients gets the updated count, provide the count as data we send in real time
+// socket.emit('countUpdated', count) -> connect to the specific connection whereas io.emit('countUpdated', count) connects every single connection like chat app
     })
 })
 
